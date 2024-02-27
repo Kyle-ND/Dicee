@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,8 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(scaffoldBackgroundColor: Colors.red),
+      debugShowCheckedModeBanner: false,
+      title: 'Dicee App',
+      theme: ThemeData(scaffoldBackgroundColor: Colors.teal[300]),
       home: const dicepage(),
     );
   }
@@ -26,30 +29,53 @@ class dicepage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           "Dicee",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 45.0,
+          fontStyle: FontStyle.italic),
         ),
-        backgroundColor: Colors.red[500],
+        backgroundColor: Colors.teal,
         centerTitle: true,
         elevation: 10.0,
       ),
-      body: mainbody(),
+      body: const mainbody(),
     );
   }
+}
 
-  Widget mainbody() {
-    var diceImageNum = 5;
+class mainbody extends StatefulWidget {
+  const mainbody({super.key});
+
+  @override
+  State<mainbody> createState() => _mainbodyState();
+}
+
+class _mainbodyState extends State<mainbody> {
+  int dicenumber = Random().nextInt(6) + 1;
+  int rdicenumber = Random().nextInt(6) + 1;
+  @override
+  Widget build(BuildContext context) {
     return Center(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
               child: TextButton(
-                  onPressed: () => print("left button"),
-                  child: Image.asset('images/dice$diceImageNum.png'))),
+                  onPressed: () {
+                    dicenumber = Random().nextInt(6) + 1;
+                    rdicenumber = Random().nextInt(6) + 1;
+                    setState(() {});
+                  },
+                  child: Image.asset('images/dice$dicenumber.png'))),
           Expanded(
               child: TextButton(
-                  onPressed: () => print("right button"),
-                  child: Image.asset('images/dice2.png'))),
+                  onPressed: () {
+                    rdicenumber = Random().nextInt(6) + 1;
+                    dicenumber = Random().nextInt(6) + 1;
+                    setState(() {});
+
+                  },
+                  child: Image.asset('images/dice$rdicenumber.png'))),
         ],
       ),
     );
